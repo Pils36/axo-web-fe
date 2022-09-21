@@ -1,12 +1,10 @@
 import React, {useState} from 'react'
-import ConsultBtn from '../components/Buttons/ConsultBtn'
 import QuoteBtn from '../components/Buttons/QuoteBtn'
 import Footer from '../components/Footer'
 import store from "../components/store.png"
 import Boxes from "../components/boxes.png"
 import LogoMenu from '../components/LogoMenu'
 import Nav from '../components/Nav'
-import { FaSearch } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import Search from '../components/searchbar/Search'
 import Quoy from '../components/Buttons/Quoy'
@@ -28,8 +26,8 @@ const Storage = () => {
                <Search />
             {/* <FaSearch className='text-white scale-100' /> */}
             </div>
-              <svg xmlns="http://www.w3.org/2000/svg" onClick={showMenu} className="h-6 w-6 text-white scale-100 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h7" />
+              <svg xmlns="http://www.w3.org/2000/svg" onClick={showMenu} className="h-6 w-6 text-white scale-100 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h7" />
               </svg>
           </div>
         </div> 

@@ -1,9 +1,10 @@
 import React from 'react'
+import succesImage from '../../images/success.gif'
 
 const Final = () => {
     return (
         <div>
-           Final 
+           <img src={succesImage} alt="Success" />
         </div>
     )
 }

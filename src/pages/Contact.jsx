@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { FaSearch } from 'react-icons/fa'
 import Footer from '../components/Footer'
 import LogoMenu from '../components/LogoMenu'
 import Nav from '../components/Nav'
@@ -22,8 +21,8 @@ const Contact = () => {
           <LogoMenu />
           <div className='flex gap-20 items-center mx-10 cursor-pointer'>
             {/* <FaSearch className='text-white scale-100' /> */}
-              <svg xmlns="http://www.w3.org/2000/svg" onClick={showMenu} className="h-6 w-6 text-white scale-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h7" />
+              <svg xmlns="http://www.w3.org/2000/svg" onClick={showMenu} className="h-6 w-6 text-white scale-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h7" />
               </svg>
           </div>
         </div>

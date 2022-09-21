@@ -2,11 +2,9 @@ import { useContext } from 'react'
 import { StepperContext } from '../../contexts/StepperContext'
 
 const Destination = () => {
-    const { userData, setUserData } = useContext(StepperContext)
-    const handleChange = (e) =>{
-        const {name, value} = e.target
-        setUserData({...userData, [name]:value})
-    }
+
+    const { movingFrom, movingTo, setMovingFrom, setMovingTo } = useContext(StepperContext)
+
   return (
     <div className='flex flex-col'>
         <div className='text-center'>
@@ -16,8 +14,8 @@ const Destination = () => {
 
         <div className='border-t border-b border-black/40'>
             <form className='my-8 flex-col'>
-                <input type="text" placeholder='Moving From' className='border px-2 my-2' />
-                <input type="text" placeholder='Moving To' className='border px-2' />
+                  <input type="text" name="movingFrom" placeholder='Moving From' className='border px-2 my-2' onChange={(e) => setMovingFrom(e.target.value)} value={movingFrom} />
+                  <input type="text" name="movingTo" placeholder='Moving To' className='border px-2 my-2' onChange={(e) => setMovingTo(e.target.value)} value={movingTo} />
             </form>
         </div>
     </div>

@@ -1,6 +1,4 @@
-import React, { useState } from 'react'
-import { FaSearch } from 'react-icons/fa'
-import { StepperContext } from '../contexts/StepperContext'
+import React, { useState, useContext } from 'react'
 import LogoMenu from '../components/LogoMenu'
 import Nav from '../components/Nav'
 import Stepper from '../components/Stepper'
@@ -10,9 +8,14 @@ import HomeSize from '../components/steps/Homesize'
 import DayConsult from '../components/steps/DayConsult'
 import Final from '../components/steps/Final'
 import Reaching from '../components/steps/Reaching'
-
-
+import { StepperContext } from '../contexts/StepperContext'
+import axios from 'axios';
 const Quotes = () => {
+
+
+
+
+  const { movingFrom, movingTo, homeSize, myDate, firstname, lastname, email, additionalInfo, phoneNumber, howYouHearAboutUs } = useContext(StepperContext)
 
   const [active, setActive] = useState (false)
   const showMenu = () => {
@@ -20,8 +23,7 @@ const Quotes = () => {
   }
 
   const [currentStep, setCurrentStep] = useState(1)
-  const [userData, setUSerData] = useState ('')
-  const [finalData, setFinalData] = useState ([])
+
 
   const steps = [
     "",
@@ -32,6 +34,7 @@ const Quotes = () => {
   ]
 
   const displayStep =  (step) => {
+    
     switch(step) {
       case 1:
         return <Destination />
@@ -43,17 +46,64 @@ const Quotes = () => {
         return <Reaching />
       case 5:
         return <Final />
-        default:
+      default:
     }
   }
 
-  const handleClick = (direction) => {
+  const handleClick = async (direction) => {
+
     let newStep = currentStep
 
     direction === "next" ? newStep++ : newStep--
 
-    newStep > 0 && newStep < steps.length && setCurrentStep(newStep)
+    newStep > 0 && newStep <= steps.length && setCurrentStep(newStep)
+
+    if (newStep > 4){
+      await postFreeQuotes();
+    }
+
   }
+
+  const postFreeQuotes = async () => {
+    try {
+
+      const data = {
+        movingFrom,
+        movingTo,
+        homeSize,
+        movingDate: new Date(myDate + 'GMT+0'),
+        firstName: firstname,
+        lastName: lastname,
+        email: email,
+        howYouHearAboutUs,
+        additionalDetails: additionalInfo,
+        phoneNumber
+      };
+
+      const config = {
+        method: 'POST',
+        url: 'http://api.axopolitan.com/api/v1/free-quote',
+        headers: {
+          'Authorization': 'Bearer base64:LGCVHWAkwbMMqSt6j5FQBpGXGGxs/D8huidrrhZ+GPI=',
+          'dev_mode': process.env.NODE_ENV === 'development' ? 'staging' : 'production'
+        },
+        data
+      }
+
+      await axios(config);
+
+      displayStep(5);
+
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
+
+
+
 
   
   return (
@@ -63,8 +113,8 @@ const Quotes = () => {
           <LogoMenu />
           <div className='flex gap-20 items-center mx-10'>
             {/* <FaSearch className='text-white scale-100' /> */}
-              <svg xmlns="http://www.w3.org/2000/svg" onClick={showMenu} className="h-6 w-6 text-white scale-100 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h7" />
+              <svg xmlns="http://www.w3.org/2000/svg" onClick={showMenu} className="h-6 w-6 text-white scale-100 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h7" />
               </svg>
           </div>
         </div>
@@ -81,14 +131,7 @@ const Quotes = () => {
               />
 
               <div className='px-10'>
-                <StepperContext.Provider value={{
-                  userData,
-                  setUSerData,
-                  finalData,
-                  setFinalData
-                }}>
                   {displayStep(currentStep)}
-                </StepperContext.Provider>
               </div>
             </div>
             {currentStep !== steps.length && 
