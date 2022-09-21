@@ -81,7 +81,7 @@ const Consultation = () => {
 
       const config = {
         method: 'POST',
-        url: 'http://api.axopolitan.com/api/v1/survey',
+        url: process.env.NODE_ENV === 'development' ? 'http://api.axopolitan.com/api/v1/survey' : 'https://api.axopolitan.com/api/v1/survey',
         headers: {
           'Authorization': 'Bearer base64:LGCVHWAkwbMMqSt6j5FQBpGXGGxs/D8huidrrhZ+GPI=',
           'dev_mode': process.env.NODE_ENV === 'development' ? 'staging' : 'production'

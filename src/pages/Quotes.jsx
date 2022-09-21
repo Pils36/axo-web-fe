@@ -82,7 +82,7 @@ const Quotes = () => {
 
       const config = {
         method: 'POST',
-        url: 'http://api.axopolitan.com/api/v1/free-quote',
+        url: process.env.NODE_ENV === 'development' ? 'http://api.axopolitan.com/api/v1/free-quote' : 'https://api.axopolitan.com/api/v1/free-quote',
         headers: {
           'Authorization': 'Bearer base64:LGCVHWAkwbMMqSt6j5FQBpGXGGxs/D8huidrrhZ+GPI=',
           'dev_mode': process.env.NODE_ENV === 'development' ? 'staging' : 'production'
