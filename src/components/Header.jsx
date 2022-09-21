@@ -1,10 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import Nav from './Nav'
 import LogoMenu from './LogoMenu'
 import FreeQuote from './Buttons/FreeQuote'
 import Search from './searchbar/Search'
- 
+import { StepperContext } from '../contexts/StepperContext'
+
 const Header = () => {
+
+  const { movingFrom, movingTo, setMovingFrom, setMovingTo } = useContext(StepperContext)
 
   const [active, setActive] = useState (false)
     const showMenu = () => {
@@ -34,12 +37,12 @@ const Header = () => {
                 <form className='bg-white mr-[350px] py-1 flex gap-8'>
                   <div className='w-56 px-3 py-2 ml-3 rounded-md'>
                     <span className='pl-2 text-base font-extrabold uppercase'>Moving From</span>
-                    <input type="text" placeholder='Enter Current Address' className='text-black pl-2 focus:bg-gray-300 rounded-md'/>
+            <input type="text" placeholder='Enter Current Address' className='text-black pl-2 focus:bg-gray-300 rounded-md' onChange={(e) => setMovingFrom(e.target.value)} value={movingFrom} />
                   </div>
                     {/* <div className='w-1 h-2'></div> */}
                   <div className='w-56 px-3 py-2 ml-1 rounded-md'>
                     <span className='pl-2 text-base font-extrabold uppercase'>Moving To</span>
-                    <input type="text" placeholder='Enter Destination' className='text-black pl-2 focus:bg-gray-300 rounded-md'/>
+            <input type="text" placeholder='Enter Destination' className='text-black pl-2 focus:bg-gray-300 rounded-md' onChange={(e) => setMovingTo(e.target.value)} value={movingTo} />
                   </div>
                   <FreeQuote />
                 </form>
