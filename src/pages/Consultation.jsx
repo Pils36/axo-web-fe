@@ -11,6 +11,7 @@ import Final from '../components/steps/Final'
 import ConsultReaching from '../components/steps/ConsultReaching'
 import axios from 'axios';
 import Day from '../components/steps/Day'
+import showMessage from '../helpers/messagealert'
 
 const Consultation = () => {
 
@@ -43,6 +44,7 @@ const Consultation = () => {
           return <ConsultReaching />
         case 5:
           return <Final />
+        
           default:
       }
     }
@@ -50,11 +52,33 @@ const Consultation = () => {
     const handleClick = async (direction) => {
       let newStep = currentStep
   
-      direction === "next" ? newStep++ : newStep--
+      direction === "next" ? newStep++ : direction === "submit" ? newStep++ : newStep--;
   
       newStep > 0 && newStep <= steps.length && setCurrentStep(newStep)
 
-      if (newStep > 4) {
+      if (direction === 'submit') {
+
+        if (movingFrom === '' || movingTo === '') {
+          showMessage('Oops!', 'Moving From and Moving To cannot be empty.', 'info');
+          setCurrentStep(1);
+          return displayStep(1);
+        }
+        if (homeSize === '') {
+          showMessage('Oops!', 'Please select your home size', 'info');
+          setCurrentStep(2);
+          return displayStep(2);
+        }
+        if (myDate === '' || visitTime === '') {
+          showMessage('Oops!', 'Please select visit date and time', 'info');
+          setCurrentStep(3);
+          return displayStep(3);
+        }
+        if (firstname === '' || lastname === '' || email === '' || phoneNumber === '') {
+          showMessage('Oops!', 'Please fill in the details here', 'info');
+          setCurrentStep(4);
+          return displayStep(4);
+        }
+
         await postFreeQuotes();
       }
     }
@@ -93,11 +117,18 @@ const Consultation = () => {
 
       console.log(result);
 
+      setCurrentStep(5);
       displayStep(5);
 
-
     } catch (error) {
-      console.log(error);
+      setCurrentStep(4);
+      displayStep(4);
+      if(error.response){
+        showMessage('Oops!', error.response.data.message, 'error');
+      }
+      else{
+        showMessage('Oops!', error.message, 'error');
+      }
     }
   }
 

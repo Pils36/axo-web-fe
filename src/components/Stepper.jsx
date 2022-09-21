@@ -11,7 +11,7 @@ const Stepper = ({steps, currentStep}) => {
         let count = 0
         
         while(count < newSteps.length){
-            if(count == stepNumber){
+            if(count === stepNumber){
                 newSteps[count] = {
                     ...newSteps[count],
                     highlighted: true,

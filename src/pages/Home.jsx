@@ -1,11 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Footer from '../components/Footer'
 import ImageOne from "../images/custom-icons-00.png"
-import ImageTwo from "../images/custom-icons-01.png"
 import ImageThree from "../images/custom-icons-11.png"
-import ImageFour from "../images/custom-icons-12.png"
 import ImageFive from "../images/custom-icons-22.png"
-import ImageSix from "../images/custom-icons-23.png"
 import ImageSeven from "../images/service-icons-0.png"
 import ImageEight from "../images/service-icons-00.png"
 import ImageNine from "../images/service-icons-1.png"

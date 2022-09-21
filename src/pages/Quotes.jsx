@@ -10,6 +10,7 @@ import Final from '../components/steps/Final'
 import Reaching from '../components/steps/Reaching'
 import { StepperContext } from '../contexts/StepperContext'
 import axios from 'axios';
+import showMessage from '../helpers/messagealert'
 const Quotes = () => {
 
 
@@ -54,11 +55,34 @@ const Quotes = () => {
 
     let newStep = currentStep
 
-    direction === "next" ? newStep++ : newStep--
+    direction === "next" ? newStep++ : direction === "submit" ? newStep++ : newStep--;
 
     newStep > 0 && newStep <= steps.length && setCurrentStep(newStep)
 
-    if (newStep > 4){
+
+    if (direction === "submit"){
+
+      if (movingFrom === '' || movingTo === '') {
+        showMessage('Oops!', 'Moving From and Moving To cannot be empty.', 'info');
+        setCurrentStep(1);
+        return displayStep(1);
+      }
+      if (homeSize === '') {
+        showMessage('Oops!', 'Please select your home size', 'info');
+        setCurrentStep(2);
+        return displayStep(2);
+      }
+      if (myDate === '') {
+        showMessage('Oops!', 'Please select visit date', 'info');
+        setCurrentStep(3);
+        return displayStep(3);
+      }
+      if (firstname === '' || lastname === '' || email === '' || phoneNumber === '') {
+        showMessage('Oops!', 'Please fill in the details here', 'info');
+        setCurrentStep(4);
+        return displayStep(4);
+      }
+
       await postFreeQuotes();
     }
 
@@ -91,12 +115,19 @@ const Quotes = () => {
       }
 
       await axios(config);
-
+      setCurrentStep(5);
       displayStep(5);
 
 
     } catch (error) {
-      console.log(error);
+      setCurrentStep(4);
+      displayStep(4);
+      if (error.response) {
+        showMessage('Oops!', error.response.data.message, 'error');
+      }
+      else {
+        showMessage('Oops!', error.message, 'error');
+      }
     }
   }
 
